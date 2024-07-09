@@ -11,7 +11,7 @@ const upload = multer(uploadConfig.MULTER);
 
 dishesRoutes.use(ensureAuthenticated);
 
-dishesRoutes.get("/", dishesController.index);
+dishesRoutes.get("/index", dishesController.index);
 dishesRoutes.post("/newdish", ensureADMIN, upload.single('image'), dishesController.create);
 dishesRoutes.put("/editdish/:id", ensureADMIN, upload.single('image'), dishesController.update);
 dishesRoutes.delete("/:id", ensureADMIN, dishesController.delete);

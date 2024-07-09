@@ -3,8 +3,6 @@ const knex = require("../database/knex");
 const DiskStorage = require("../providers/DiskStorage");
 
 class DishesController {
-
-  // Método para criar um novo prato
   async create(request, response) {
     console.log("Iniciando criação de um novo prato...");
     console.log("Request body:", request.body);
@@ -43,14 +41,17 @@ class DishesController {
       throw new AppError("Formato de tags inválido", 400);
     }
 
-    const dish = await knex("dishes").insert({
-      name,
-      category,
-      price,
-      image: filename,
-      description,
-      tags: JSON.stringify(parsedTags),
-    }, "id");
+    const dish = await knex("dishes").insert(
+      {
+        name,
+        category,
+        price,
+        image: filename,
+        description,
+        tags: JSON.stringify(parsedTags),
+      },
+      "id"
+    );
 
     const dish_id = dish[0].id;
     console.log("Prato criado com sucesso:", dish_id);
@@ -68,7 +69,6 @@ class DishesController {
     return response.status(201).json({ message: "Prato criado com sucesso." });
   }
 
-  // Método para atualizar um prato existente
   async update(request, response) {
     console.log("Iniciando atualização de prato...");
     console.log("Request body:", request.body);
@@ -87,7 +87,9 @@ class DishesController {
 
       if (!Array.isArray(parsedTags)) {
         console.log("Erro: Formato inválido para as tags.");
-        return response.status(400).json({ message: "Formato inválido para as tags" });
+        return response
+          .status(400)
+          .json({ message: "Formato inválido para as tags" });
       }
 
       const dish = await knex("dishes").where({ id }).first();
@@ -126,11 +128,12 @@ class DishesController {
       return response.json({ message: "Prato atualizado com sucesso." });
     } catch (error) {
       console.error("Erro ao atualizar o prato:", error);
-      return response.status(500).json({ message: "Erro ao atualizar o prato" });
+      return response
+        .status(500)
+        .json({ message: "Erro ao atualizar o prato" });
     }
   }
 
-  // Método para exibir detalhes de um prato específico
   async show(request, response) {
     console.log("Iniciando obtenção de detalhes do prato...");
     console.log("Request params:", request.params);
@@ -150,30 +153,30 @@ class DishesController {
     return response.json({ ...dish, tags });
   }
 
-  // Método para listar todos os pratos
   async index(request, response) {
-    console.log("Iniciando listagem de pratos...");
-
     try {
-      const dishes = await knex("dishes").select("*");
-      console.log("Pratos encontrados:", dishes.length);
+      const { term } = request.query;
+      let dishes;
 
-      const dishesWithTags = await Promise.all(
-        dishes.map(async (dish) => {
-          const tags = await knex("tags").where({ dish_id: dish.id }).pluck("name");
-          return { ...dish, tags };
-        })
-      );
+      if (term) {
+        // Se houver um termo de busca, executar a busca
+        dishes = await knex("dishes")
+          .where("name", "like", `%${term}%`)
+          .orWhere("description", "like", `%${term}%`)
+          .select("*");
+      } else {
+        // Caso contrário, listar todos os pratos
+        dishes = await knex("dishes").select("*");
+      }
 
-      console.log("Pratos com tags retornados:", dishesWithTags.length);
-      return response.json(dishesWithTags);
+      // Implementação para adicionar tags se necessário
+      return response.json(dishes);
     } catch (error) {
       console.error("Erro ao buscar pratos:", error);
-      throw new AppError("Erro ao buscar pratos.", 500);
+      return response.status(500).json({ message: "Erro ao buscar pratos." });
     }
   }
 
-  // Método para deletar um prato
   async delete(request, response) {
     console.log("Iniciando exclusao de prato...");
     console.log("Request params:", request.params);
