@@ -157,25 +157,36 @@ class DishesController {
     try {
       const { term } = request.query;
       let dishes;
-
+  
       if (term) {
-        // Se houver um termo de busca, executar a busca
         dishes = await knex("dishes")
-          .where("name", "like", `%${term}%`)
-          .orWhere("description", "like", `%${term}%`)
-          .select("*");
+          .leftJoin("tags", "dishes.id", "tags.dish_id")
+          .where("dishes.name", "like", `%${term}%`)
+          .orWhere("dishes.description", "like", `%${term}%`)
+          .orWhere("tags.name", "like", `%${term}%`)
+          .select("dishes.*")
+          .distinct();
+  
+        for (let dish of dishes) {
+          const tags = await knex("tags").where({ dish_id: dish.id }).pluck("name");
+          dish.tags = tags;
+        }
       } else {
-        // Caso contrário, listar todos os pratos
         dishes = await knex("dishes").select("*");
+  
+        for (let dish of dishes) {
+          const tags = await knex("tags").where({ dish_id: dish.id }).pluck("name");
+          dish.tags = tags;
+        }
       }
-
-      // Implementação para adicionar tags se necessário
+  
       return response.json(dishes);
     } catch (error) {
       console.error("Erro ao buscar pratos:", error);
       return response.status(500).json({ message: "Erro ao buscar pratos." });
     }
   }
+  
 
   async delete(request, response) {
     console.log("Iniciando exclusao de prato...");
