@@ -144,6 +144,11 @@ O backend do **Food Explorer** fornece a API que suporta o sistema de gerenciame
 - **swagger-jsdoc** - Documentação de API usando Swagger.
 - **swagger-ui-express** - Interface gráfica para a documentação Swagger.
 
+## Documentação da API
+
+- **Site no ar em Produção no Netlify** [Link para o Frontend](https://foodexplorerbycristianvalim.netlify.app/) 
+- **API em Produção no Render:** [Link para a API](https://foodexplorer-api-a607.onrender.com) 
+
 ## Autores
 
 - **Cristian Valim** - Desenvolvimento
