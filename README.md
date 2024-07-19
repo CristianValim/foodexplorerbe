@@ -149,6 +149,9 @@ O backend do **Food Explorer** fornece a API que suporta o sistema de gerenciame
 - **Site no ar em Produção no Netlify** [Link para o Frontend](https://foodexplorerbycristianvalim.netlify.app/) 
 - **API em Produção no Render:** [Link para a API](https://foodexplorer-api-a607.onrender.com) 
 
+## Repositórios
+- **Frontend:** [Repositório do Frontend](https://github.com/CristianValim/foodexplorer-frontend)
+
 ## Autores
 
 - **Cristian Valim** - Desenvolvimento
