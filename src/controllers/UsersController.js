@@ -2,20 +2,19 @@ const { hash, compare } = require("bcryptjs");
 const AppError = require("../utils/AppError");
 
 const sqliteConnection = require("../database/sqlite");
+const UserRepository = require("../repositories/UserRepository");
 
 class UsersController {
   async create(request, response) {
     const { name, email, password, role } = request.body;
 
+    const userRepository = new UserRepository();
+
     if (!name || !email || !password) {
       throw new AppError("Todos campos são obrigatórios", 400);
     }
 
-    const database = await sqliteConnection();
-    const checkUserExist = await database.get(
-      "SELECT * FROM users WHERE email = (?)",
-      [email]
-    );
+    const checkUserExist = await userRepository.findByEmail(email);
 
     if (checkUserExist) {
       throw new AppError("E-mail já cadastrado.", 409);
@@ -24,10 +23,7 @@ class UsersController {
     const hashedPassword = await hash(password, 8);
     const userRole = role || "user";
 
-    await database.run(
-      "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
-      [name, email, hashedPassword, userRole]
-    );
+    userRepository.create({ name, email, password: hashedPassword, userRole });
 
     return response.status(201).json();
   }
