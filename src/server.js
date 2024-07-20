@@ -6,6 +6,7 @@ const uploadConfig = require("./configs/upload");
 const DiskStorage = require("./providers/DiskStorage");
 const express = require("express");
 const routes = require("./routes");
+const { swaggerUi, specs } = require("./swagger");
 const cors = require("cors");
 
 migrationsRun();
@@ -14,8 +15,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Servir arquivos estáticos da pasta de uploads
 app.use("/files", express.static(uploadConfig.UPLOADS_FOLDER));
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(routes);
 

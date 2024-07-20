@@ -146,8 +146,17 @@ O backend do **Food Explorer** fornece a API que suporta o sistema de gerenciame
 
 ## Documentação da API
 
-- **Site no ar em Produção no Netlify** [Link para o Frontend](https://foodexplorerbycristianvalim.netlify.app/) 
-- **API em Produção no Render:** [Link para a API](https://foodexplorer-api-a607.onrender.com) 
+A documentação completa da API pode ser acessada diretamente através do Swagger UI. A interface gráfica facilita a exploração dos endpoints e permite a execução de chamadas diretamente pela interface.
+
+### Acesso à Documentação
+
+- **URL da Documentação da API:** [https://foodexplorer-api-a607.onrender.com/api-docs](https://foodexplorer-api-a607.onrender.com/api-docs)
+
+Na documentação do Swagger, você encontrará detalhes sobre todos os endpoints disponíveis, incluindo os parâmetros necessários, corpos de requisição e respostas esperadas. (Em inglês)
+
+- **Site no ar em Produção no Netlify:** [Link para o Frontend](https://foodexplorerbycristianvalim.netlify.app/)
+- **API em Produção no Render:** [Link para a API](https://foodexplorer-api-a607.onrender.com)
+
 
 ## Repositórios
 - **Frontend:** [Repositório do Frontend](https://github.com/CristianValim/foodexplorer-frontend)
