@@ -159,7 +159,7 @@ Na documentação do Swagger, você encontrará detalhes sobre todos os endpoint
 
 
 ## Repositórios
-- **Frontend:** [Repositório do Frontend](https://github.com/CristianValim/foodexplorer-frontend)
+- **Frontend:** [Repositório do Frontend](https://github.com/CristianValim/foodexplorerfe)
 
 ## Autores
 
