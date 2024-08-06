@@ -23,7 +23,7 @@ app.use(routes);
 
 app.use((error, request, response, next) => {
   const diskStorage = new DiskStorage();
-  if (request.file && request.file.filename) {
+  if (request.file?.filename) {
     diskStorage.deleteFile(request.file.filename);
   }
   console.error({

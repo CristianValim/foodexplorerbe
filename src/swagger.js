@@ -10,7 +10,7 @@ const options = {
       description: 'O backend do Food Explorer fornece a API que suporta o sistema de gerenciamento de pratos e usuários para um restaurante. Ele permite operações como criação, atualização, exclusão e recuperação de pratos, bem como gerenciamento de usuários e sessões.',
     },
   },
-  apis: ['./src/routes/*.js'],
+  apis: ['./src/routes/*.js', './src/controllers/*.js'],
 };
 
 const specs = swaggerJsdoc(options);
